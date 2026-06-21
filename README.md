@@ -2,7 +2,7 @@
 
 A Next.js web app that generates a Relats-branded Organisational Carbon Footprint PDF report from a sample CSV, built as a technical interview challenge for **Footprint Mappa**.
 
-**Live demo:** https://report-builder-mappa-gvx3grt8p-amadeu09s-projects.vercel.app
+**Live demo:**  https://report-builder-mappa.vercel.app/
 
 ---
 
