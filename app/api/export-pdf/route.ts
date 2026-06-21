@@ -1,9 +1,9 @@
-import { chromium } from 'playwright';
 import { ReportSpecSchema } from '@/lib/spec';
-import { DEFAULT_OPTIONS } from '@/lib/report/options';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+// Vercel Pro max; Hobby tier cap is 10s (may timeout on cold start)
+export const maxDuration = 60;
 
 export async function POST(request: Request): Promise<Response> {
   const origin = new URL(request.url).origin;
@@ -20,7 +20,21 @@ export async function POST(request: Request): Promise<Response> {
     // no body or non-JSON — use defaults
   }
 
-  const browser = await chromium.launch();
+  // On Vercel: playwright-core + @sparticuz/chromium (no bundled binary).
+  // Locally: playwright's own Chromium (installed via npx playwright install chromium).
+  let browser;
+  if (process.env.VERCEL) {
+    const chromiumPkg = await import('@sparticuz/chromium');
+    const { chromium: playwrightCore } = await import('playwright-core');
+    browser = await playwrightCore.launch({
+      args: chromiumPkg.default.args,
+      executablePath: await chromiumPkg.default.executablePath(),
+      headless: true,
+    });
+  } else {
+    const { chromium } = await import('playwright');
+    browser = await chromium.launch();
+  }
 
   try {
     const page = await browser.newPage();
@@ -37,7 +51,7 @@ export async function POST(request: Request): Promise<Response> {
     return new Response(new Uint8Array(pdf), {
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'attachment; filename="relats-ocf-2024.pdf"',
+        'Content-Disposition': 'attachment; filename="relats-ocf.pdf"',
       },
     });
   } catch (err) {

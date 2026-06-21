@@ -9,7 +9,7 @@ developer, and which Claude Code features were used and why.
 
 ## Workflow
 
-The entire session ran inside **Claude Code** (the CLI), using a **spec-driven
+All the work ran inside **Claude Code** (the CLI), using a **spec-driven
 approach**: the project specification (`CLAUDE.md`) was written by the human
 developer before any feature code, and every implementation step was gated on an
 explicit plan + approval cycle. Claude proposed a short plan; the developer
@@ -94,7 +94,7 @@ as an autonomous agent.
 ## Summary
 
 The AI accelerated implementation significantly — the full stack (data layer,
-branded report, PDF export, NL spec editor) was built in a single focused session.
+branded report, PDF export, NL spec editor) was built across several short focused sessions over a few days.
 The human's contribution was the architecture, the constraints, the spec, and the
 quality gates. The AI's contribution was turning those decisions into working code
 quickly and correctly.

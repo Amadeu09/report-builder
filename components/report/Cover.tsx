@@ -1,6 +1,6 @@
-type Props = { entityName: string; year: number };
+type Props = { entityName: string };
 
-export function Cover({ entityName, year }: Props) {
+export function Cover({ entityName }: Props) {
   return (
     <div className="break-after-page flex min-h-[60vh] flex-col justify-between bg-white p-12">
       {/* Logo placeholder — replace with vector asset when available */}
@@ -17,7 +17,7 @@ export function Cover({ entityName, year }: Props) {
           Organisational Carbon Footprint
         </h1>
         <p className="text-h1 text-slate">
-          {entityName} · {year}
+          {entityName}
         </p>
         <p className="text-body text-slate">
           GHG Protocol Corporate Standard / ISO 14064-1 · Scopes 1, 2 & 3

@@ -8,9 +8,6 @@ import { GlobalResults } from './GlobalResults';
 import { Scope } from './Scope';
 import { Conclusions } from './Conclusions';
 
-// Year not in the CSV — 2024 matches the sample dataset period.
-const REPORT_YEAR = 2024;
-
 type Props = { data: OcfDataset; options: ReportOptions };
 
 export function OcfReport({ data, options }: Props) {
@@ -22,7 +19,7 @@ export function OcfReport({ data, options }: Props) {
         switch (sectionId) {
           case 'cover':
             return (
-              <Cover key={sectionId} entityName={entity.name} year={REPORT_YEAR} />
+              <Cover key={sectionId} entityName={entity.name} />
             );
           case 'intro':
             return <Intro key={sectionId} />;

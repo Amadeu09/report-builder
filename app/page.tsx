@@ -29,7 +29,7 @@ export default function Home() {
             <h1 className="mb-5 text-4xl font-bold leading-tight text-app-ink">
               Relats
               <br />
-              OCF 2024
+              OCF
             </h1>
             <p className="max-w-[46ch] text-base leading-relaxed text-app-ink">
               Organisational Carbon Footprint report. Edit sections, entities

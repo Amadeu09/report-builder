@@ -53,7 +53,7 @@ export function scope3Slices(
   const scope3 = entity.scopes[3];
   const scope3Total = scope3.total;
 
-  let cats = [...scope3.categories].filter((c) => c.value > 0);
+  const cats = [...scope3.categories].filter((c) => c.value > 0);
 
   if (sort === 'value-desc') {
     cats.sort((a, b) => b.value - a.value);

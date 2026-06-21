@@ -38,16 +38,17 @@ function arcPath(startDeg: number, endDeg: number): string {
 
 export function Donut({ slices, centerLabel, centerSub, aria }: Props) {
   const visible = slices.filter((s) => s.share > 0.001);
-  let deg = 0;
 
-  const arcs = visible.map((s) => {
-    const fullSpan = s.share * 360;
-    const drawSpan = Math.max(0, fullSpan - GAP_DEG);
-    const startDeg = deg + GAP_DEG / 2;
-    const d = arcPath(startDeg, startDeg + drawSpan);
-    deg += fullSpan;
-    return { ...s, d };
-  });
+  const { arcs } = visible.reduce<{ arcs: Array<DonutSlice & { d: string }>; deg: number }>(
+    ({ arcs, deg }, s) => {
+      const fullSpan = s.share * 360;
+      const drawSpan = Math.max(0, fullSpan - GAP_DEG);
+      const startDeg = deg + GAP_DEG / 2;
+      const d = arcPath(startDeg, startDeg + drawSpan);
+      return { arcs: [...arcs, { ...s, d }], deg: deg + fullSpan };
+    },
+    { arcs: [], deg: 0 },
+  );
 
   return (
     <div className="break-inside-avoid flex flex-col gap-6 sm:flex-row sm:items-start">

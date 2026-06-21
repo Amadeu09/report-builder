@@ -40,7 +40,8 @@ export function PreviewSidenav({ spec }: Props) {
   return (
     <GrainGradient
       variant="dark"
-      className={`flex-shrink-0 border-r border-white/10 transition-[width] duration-200 ${
+      muted
+      className={`flex flex-shrink-0 flex-col border-r border-white/10 transition-[width] duration-200 ${
         open ? 'w-80' : 'w-10'
       }`}
       contentClassName="flex flex-col flex-1 overflow-hidden"

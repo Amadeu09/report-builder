@@ -107,7 +107,7 @@ export function ReportBuilder({ dataset, initialSpec }: Props) {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'relats-ocf-2024.pdf';
+      a.download = 'relats-ocf.pdf';
       a.click();
       URL.revokeObjectURL(url);
     } catch {
@@ -127,6 +127,7 @@ export function ReportBuilder({ dataset, initialSpec }: Props) {
       {/* ── Sidebar ── */}
       <GrainGradient
         variant="dark"
+        muted
         className={`flex flex-shrink-0 flex-col border-r border-white/10 transition-[width] duration-200 ${
           sidebarOpen ? 'w-80' : 'w-10'
         }`}
@@ -165,7 +166,13 @@ export function ReportBuilder({ dataset, initialSpec }: Props) {
             </div>
 
             {/* Message list */}
-            <div className="flex-1 space-y-3 overflow-y-auto p-4">
+            <div
+              className={`flex flex-1 flex-col overflow-y-auto p-4 ${
+                messages.length === 0 && !loading
+                  ? 'items-center justify-center'
+                  : 'space-y-3'
+              }`}
+            >
               {messages.length === 0 && !loading && (
                 <p className="text-xs text-white/50">Ask me to adjust the report…</p>
               )}
@@ -212,12 +219,13 @@ export function ReportBuilder({ dataset, initialSpec }: Props) {
             )}
 
             {/* Input */}
-            <form onSubmit={handleSubmit} className="flex border-t border-white/10">
+            <form onSubmit={handleSubmit} className="flex flex-shrink-0 border-t border-white/10">
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="e.g. show only Scope 3"
                 disabled={loading}
+                autoComplete="off"
                 className="flex-1 bg-transparent px-4 py-3 text-sm text-white placeholder-white/30 outline-none disabled:opacity-50"
               />
               <button
