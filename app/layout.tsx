@@ -1,21 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-// next/font registers the @font-face under a hashed family name and exposes
-// it via --font-inter. globals.css @theme then sets --font-report: var(--font-inter)
-// so the report token always points to the loaded face, with system-ui as a
-// genuine fallback if the font hasn't resolved yet.
+// next/font registers @font-face under a hashed name and exposes --font-inter.
+// globals.css @theme inline maps --font-report → var(--font-inter) so the
+// report always uses the loaded Inter face (preview + print).
+// The app UI uses BDO Grotesk (see globals.css @font-face TODO) via --font-sans.
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -32,10 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

@@ -4,6 +4,25 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* === BDO GROTESK — fuente de la app UI (Mappa brand) ===
+   TODO: añadir los archivos de fuente en public/fonts/ cuando estén disponibles.
+   Mientras tanto, el stack de fallback actúa como grotesque genérico.
+@font-face {
+  font-family: "BDO Grotesk";
+  src: url("/fonts/BDOGrotesk-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "BDO Grotesk";
+  src: url("/fonts/BDOGrotesk-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -46,6 +65,10 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* @theme inline keeps var() live at runtime — next/font sets --font-inter on <html>;
+     the report token references it so both preview and print resolve the loaded face. */
+  --font-report: var(--font-inter), system-ui, sans-serif;
 }
 
 :root {
@@ -72,7 +95,8 @@
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
+  /* 2px → mappa system: radios 0 por defecto, máx. 4px. shadcn vars derivan de este. */
+  --radius: 2px;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -81,6 +105,9 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* App UI font — BDO Grotesk con fallback grotesque */
+  --font-sans: "BDO Grotesk", "Helvetica Neue", Arial, sans-serif;
 }
 
 .dark {
@@ -130,9 +157,29 @@
 }
 
 
-/* === RELATS · tokens del INFORME (solo se usan en components/report/) === */
+/* ================================================================
+   MAPPA APP UI — tokens (solo para componentes fuera de report/)
+   ================================================================ */
 @theme {
-  --color-relats-orange: #FF5710;        /* CONFIRMADO de su web */
+  /* Neutros de app — prefijo app- para no colisionar con tokens Relats */
+  --color-app-ink:   #000000;
+  --color-app-paper: #ffffff;
+  --color-app-line:  #e6e6e6;
+  --color-app-muted: #9a9a9a;
+
+  /* Paleta de marca — USAR SOLO como paradas de degradado, nunca como relleno sólido */
+  --color-brand-pink:   #fdc2d8;
+  --color-brand-orange: #fca65e;
+  --color-brand-coral:  #ff7983;
+  --color-brand-navy:   #041282;
+}
+
+
+/* ================================================================
+   RELATS · tokens del INFORME (solo se usan en components/report/)
+   ================================================================ */
+@theme {
+  --color-relats-orange: #FF5710;
   --color-relats-orange-dark: #D8480D;
   --color-relats-orange-tint: #FFF1EA;
 
@@ -141,26 +188,19 @@
   --color-rule: #E6E6E6;
   --color-surface: #F7F7F5;
 
-  --color-positive: #2E7D5B;   /* reducciones */
-  --color-negative: #C0392B;   /* aumentos */
+  --color-positive: #2E7D5B;
+  --color-negative: #C0392B;
 
   --color-data-1: #FF5710;
   --color-data-2: #FF8A52;
   --color-data-3: #FFB98F;
   --color-data-4: #5B5F66;
   --color-data-5: #1A1A1A;
-  --color-other: #C0C3C8;   /* "Other categories" bucket — never from the data ramp */
+  --color-other: #C0C3C8;
 
-  /* Text scale — report only */
   --text-display: 2.25rem;
   --text-h1: 1.5rem;
   --text-h2: 1.125rem;
   --text-body: 0.875rem;
   --text-caption: 0.75rem;
-}
-
-/* @theme inline keeps var() live at runtime — next/font sets --font-inter on <html>;
-   the report token references it so both preview and print resolve the loaded face. */
-@theme inline {
-  --font-report: var(--font-inter), system-ui, sans-serif;
 }

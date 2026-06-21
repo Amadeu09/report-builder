@@ -17,7 +17,7 @@ export function OcfReport({ data, options }: Props) {
   const entity = resolveEntity(data, options.entity);
 
   return (
-    <article className="bg-white font-report text-ink">
+    <article className="bg-white font-report text-ink px-[15mm] py-[20mm] print:px-0 print:py-0">
       {options.sections.map((sectionId) => {
         switch (sectionId) {
           case 'cover':
