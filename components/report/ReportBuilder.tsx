@@ -75,6 +75,31 @@ export function ReportBuilder({ dataset, initialSpec }: Props) {
     void send(input);
   }
 
+  const [exporting, setExporting] = useState(false);
+
+  async function exportPdf() {
+    setExporting(true);
+    try {
+      const res = await fetch('/api/export-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ spec }),
+      });
+      if (!res.ok) throw new Error('Export failed');
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'relats-ocf-2024.pdf';
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {
+      alert('PDF export failed. Please try again.');
+    } finally {
+      setExporting(false);
+    }
+  }
+
   const showSuggestions = messages.length === 0;
 
   return (
@@ -84,6 +109,13 @@ export function ReportBuilder({ dataset, initialSpec }: Props) {
         <div className="border-b border-gray-200 px-4 py-3">
           <h2 className="text-sm font-semibold text-gray-900">Report Builder</h2>
           <p className="mt-0.5 text-xs text-gray-500">Edit the report with natural language</p>
+          <button
+            onClick={() => void exportPdf()}
+            disabled={exporting}
+            className="mt-3 w-full rounded-md border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:border-relats-orange hover:text-relats-orange disabled:opacity-50"
+          >
+            {exporting ? 'Generating PDF…' : 'Export PDF'}
+          </button>
         </div>
 
         {/* Message list */}
