@@ -1,0 +1,27 @@
+/* Inherited — one declaration covers all descendants: cards, SVGs, legend swatches. */
+.report-print {
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+@media print {
+  /* Root layout sets body { display: flex flex-col }.
+     Chrome's paged-media engine does not propagate break-after/before/inside
+     from within flex items — revert to block so page-break signals work. */
+  body {
+    display: block;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 20mm 15mm;
+  /*
+   * Future PDF endpoint:
+   *   await page.pdf({ preferCSSPageSize: true, printBackground: true })
+   *
+   * Do NOT pass format or margin in the Playwright call alongside these @page
+   * rules — passing both causes double margins and overrides the A4 size here.
+   * preferCSSPageSize lets this stylesheet own page geometry exclusively.
+   */
+}
